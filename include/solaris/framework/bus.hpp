@@ -20,12 +20,13 @@ public:
     auto [it, inserted]{
         m_Dispatchers.insert({typeid(E), std::make_unique<Dispatcher<E, C>>()}
         )};
-    // BaseDispatcher<C>& dispatcher{*m_Dispatchers[typeid(E)] =
-    // std::make_unique<Dispatcher<E, C>>()}; auto [it,
-    // inserted]{m_Dispatchers.try_emplace(typeid(E))};
-    return dynamic_cast<Dispatcher<E, C> &>(*it->second);
 
-    // return dynamic_cast<Dispatcher<E, C>&>(dispatcher);
+    return dynamic_cast<Dispatcher<E, C> &>(*it->second);
+  }
+
+  template <typename E>
+  void addHandler(typename Dispatcher<E, C>::Handler &&handler) {
+    getDispatcherFor<E>().addHandler(std::move(handler));
   }
 
   template <typename E>
