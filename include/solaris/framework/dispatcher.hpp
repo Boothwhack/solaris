@@ -5,12 +5,14 @@
 #include <vector>
 
 namespace solaris::framework {
-template<typename C> class BaseDispatcher {
+template <typename C>
+class BaseDispatcher {
 public:
   virtual ~BaseDispatcher() {}
 };
 
-template <typename E, typename C> class Dispatcher : public BaseDispatcher<C> {
+template <typename E, typename C>
+class Dispatcher : public BaseDispatcher<C> {
 public:
   class Context;
 

@@ -1,0 +1,5 @@
+AlignAfterOpenBracket: BlockIndent
+AllowAllArgumentsOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+AlwaysBreakTemplateDeclarations: Yes
