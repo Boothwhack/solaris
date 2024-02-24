@@ -18,8 +18,8 @@ public:
       return dynamic_cast<Dispatcher<E, C> &>(*it->second);
     }
     auto [it, inserted]{
-        m_Dispatchers.insert({typeid(E), std::make_unique<Dispatcher<E, C>>()}
-        )};
+        m_Dispatchers.insert({typeid(E), std::make_unique<Dispatcher<E, C>>()})
+    };
 
     return dynamic_cast<Dispatcher<E, C> &>(*it->second);
   }
@@ -37,4 +37,4 @@ public:
     }
   }
 };
-} // namespace solaris::framework
+} // namespace solaris::core

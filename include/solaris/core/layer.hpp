@@ -43,4 +43,4 @@ public:
 
   virtual void setup(LayerHandlers handlers) {}
 };
-} // namespace solaris::framework
+} // namespace solaris::core

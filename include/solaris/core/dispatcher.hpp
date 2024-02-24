@@ -71,4 +71,4 @@ public:
     contextWrapper.next();
   }
 };
-} // namespace solaris::framework
+} // namespace solaris::core

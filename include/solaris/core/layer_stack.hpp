@@ -21,8 +21,7 @@ class LayerStack {
       castLayer.setup(LayerHandlers<T, C>{bus, castLayer});
     }
 
-  public:
-    template <typename T, typename... Args>
+    template <typename T>
     ManagedLayer(std::unique_ptr<T> layer)
         : m_Layer{std::move(layer)}, m_Setup{&setupLayer<T>} {}
 
@@ -45,4 +44,4 @@ public:
     return bus;
   }
 };
-} // namespace solaris::framework
+} // namespace solaris::core
