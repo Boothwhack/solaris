@@ -3,7 +3,7 @@
 #include "bus.hpp"
 #include "dispatcher.hpp"
 
-namespace solaris::framework {
+namespace solaris::core {
 template <typename C>
 class BaseLayer {
 public:

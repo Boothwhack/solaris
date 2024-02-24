@@ -5,7 +5,7 @@
 #include <typeindex>
 #include <unordered_map>
 
-namespace solaris::framework {
+namespace solaris::core {
 template <typename C>
 class Bus {
   std::unordered_map<std::type_index, std::unique_ptr<BaseDispatcher<C>>>

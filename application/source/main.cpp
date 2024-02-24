@@ -1,10 +1,10 @@
-#include "solaris/framework/dispatcher.hpp"
-#include "solaris/framework/layer.hpp"
-#include "solaris/framework/layer_stack.hpp"
+#include "solaris/core/dispatcher.hpp"
+#include "solaris/core/layer.hpp"
+#include "solaris/core/layer_stack.hpp"
 #include <iostream>
-#include <solaris/framework/bus.hpp>
+#include <solaris/core/bus.hpp>
 
-using namespace solaris::framework;
+using namespace solaris::core;
 
 using std::cout;
 using std::endl;

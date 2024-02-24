@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-namespace solaris::framework {
+namespace solaris::core {
 template <typename C>
 class LayerStack {
   template <typename T>

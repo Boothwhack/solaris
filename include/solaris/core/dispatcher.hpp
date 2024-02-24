@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace solaris::framework {
+namespace solaris::core {
 template <typename C>
 class BaseDispatcher {
 public:
