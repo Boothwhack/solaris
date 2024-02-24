@@ -37,10 +37,10 @@ public:
   template <typename E>
   using Context = typename Dispatcher<E, C>::Context;
 
-  using LayerHandlers = LayerHandlers<T, C>;
+  using Handlers = LayerHandlers<T, C>;
 
   virtual ~Layer() {}
 
-  virtual void setup(LayerHandlers handlers) {}
+  virtual void setup(Handlers handlers) {}
 };
 } // namespace solaris::core

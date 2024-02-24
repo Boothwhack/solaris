@@ -1,8 +1,9 @@
-#include "solaris/core/dispatcher.hpp"
-#include "solaris/core/layer.hpp"
-#include "solaris/core/layer_stack.hpp"
 #include <iostream>
 #include <solaris/core/bus.hpp>
+#include <solaris/core/dispatcher.hpp>
+#include <solaris/core/layer.hpp>
+#include <solaris/core/layer_stack.hpp>
+#include <solaris/core/queue.hpp>
 
 using namespace solaris::core;
 
@@ -15,7 +16,7 @@ struct EventC {};
 
 class MainLayer : public Layer<MainLayer, int> {
 public:
-  void setup(LayerHandlers handlers) {
+  void setup(Handlers handlers) {
     handlers.addInstanceHandler<EventA>(&MainLayer::onA);
     handlers.addStaticHandler<EventB>(&MainLayer::onB);
     // ignore EventC
@@ -37,7 +38,7 @@ public:
 
 class SecondLayer : public Layer<SecondLayer, int> {
 public:
-  void setup(LayerHandlers handlers) {
+  void setup(Handlers handlers) {
     // ignore EventA
     handlers.addInstanceHandler<EventB>(&SecondLayer::onB);
     handlers.addStaticHandler<EventC>(&SecondLayer::onC);
@@ -65,9 +66,11 @@ int main() {
   auto bus{layers.compileBus()};
 
   int counter{0};
-  bus.dispatch(EventA(), counter);
-  bus.dispatch(EventB(), counter);
-  bus.dispatch(EventC(), counter);
+  Queue<int> queue{};
+  queue.enqueue<EventA>();
+  queue.enqueue<EventB>();
+  queue.enqueue<EventC>();
+  queue.dispatchOn(bus, counter);
 
   cout << "Final counter: " << counter << endl;
 }
