@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <solaris/framework/runtime_vector_tests.hpp>
+#include <solaris/framework/runtime_vector.hpp>
 
 #include "test_components.hpp"
 
