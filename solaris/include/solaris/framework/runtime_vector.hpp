@@ -14,10 +14,10 @@ class RuntimeVector {
 public:
   template <typename... Ts>
   class View {
-    RuntimeVector &m_Vector;
+    const RuntimeVector &m_Vector;
 
   public:
-    explicit View(RuntimeVector &vector) : m_Vector{vector} {}
+    explicit View(const RuntimeVector &vector) : m_Vector{vector} {}
 
     SelectiveObjectPtr<Ts...> begin() const {
       return {(uint8_t *)m_Vector.m_Allocation, m_Vector.m_RuntimeStruct};
@@ -82,7 +82,7 @@ public:
     return {ptr, m_RuntimeStruct};
   }
 
-  RawObjectPtr operator[](size_t index) {
+  RawObjectPtr operator[](size_t index) const {
     auto ptr{uncheckedGet(index)};
     return {ptr, m_RuntimeStruct};
   }
