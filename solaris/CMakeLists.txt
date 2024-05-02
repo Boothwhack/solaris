@@ -1,4 +1,5 @@
-add_library(solaris source/solaris.cpp
+add_library(solaris
+        source/solaris.cpp
         include/solaris/core/bus.hpp
         include/solaris/core/dispatcher.hpp
         include/solaris/core/layer.hpp
@@ -10,6 +11,7 @@ add_library(solaris source/solaris.cpp
         include/solaris/framework/runtime_object.hpp
         include/solaris/framework/runtime_struct.hpp
         include/solaris/framework/runtime_vector.hpp
+        include/solaris/math/matrix.hpp
 )
 
 target_include_directories(solaris PUBLIC include)
