@@ -71,8 +71,8 @@ TEST_CASE(
       runtimeStruct,
   };
 
-  obj.emplaceField<ComponentA>(10);
-  obj.emplaceField<ComponentC>("Hello, World!");
+  obj->emplaceField<ComponentA>(10);
+  obj->emplaceField<ComponentC>("Hello, World!");
 
   REQUIRE(obj.getFieldPtr<ComponentA>()->value == 10);
   REQUIRE(obj.getFieldPtr<ComponentC>()->value == "Hello, World!");
@@ -93,11 +93,11 @@ TEST_CASE(
       runtimeStruct,
   };
 
-  obj.emplaceField<ComponentA>(12);
-  obj.emplaceField<ComponentC>("Goodbye, World!");
+  obj->emplaceField<ComponentA>(12);
+  obj->emplaceField<ComponentC>("Goodbye, World!");
 
-  REQUIRE(obj.getField<ComponentA>().value == 12);
-  REQUIRE(obj.getField<ComponentC>().value == "Goodbye, World!");
+  REQUIRE(obj->getField<ComponentA>().value == 12);
+  REQUIRE(obj->getField<ComponentC>().value == "Goodbye, World!");
 }
 
 TEST_CASE(
@@ -122,17 +122,17 @@ TEST_CASE(
   {
     int index{0};
     for (auto it = begin; it != end; ++it) {
-      it.emplaceField<ComponentA>(20 + index);
-      it.emplaceField<ComponentC>(std::format("Hello, {}!", index));
+      it->emplaceField<ComponentA>(20 + index);
+      it->emplaceField<ComponentC>(std::format("Hello, {}!", index));
       ++index;
     }
   }
   {
     int index{0};
     for (auto it = begin; it != end; ++it) {
-      REQUIRE(it.getField<ComponentA>().value == 20 + index);
+      REQUIRE(it->getField<ComponentA>().value == 20 + index);
       REQUIRE(
-          it.getField<ComponentC>().value == std::format("Hello, {}!", index)
+          it->getField<ComponentC>().value == std::format("Hello, {}!", index)
       );
       ++index;
     }

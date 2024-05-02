@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <set>
 #include <typeindex>
 #include <typeinfo>
 #include <utility>
@@ -30,6 +31,10 @@ struct RuntimeField {
         .DestructorFunction = &RuntimeField::basicDestructorFunction<T>,
         .MoveFunction = &RuntimeField::basicMoveFunction<T>,
     };
+  }
+
+  std::strong_ordering operator<=>(const RuntimeField &other) const {
+    return TypeIndex.operator<=>(other.TypeIndex);
   }
 
 private:
@@ -68,10 +73,11 @@ struct RuntimeStruct {
 
   RuntimeStruct() = default;
 
-  template <std::ranges::range R>
-  explicit RuntimeStruct(R fields) : Members() {
+  explicit RuntimeStruct(const std::set<RuntimeField> &fields) : Members() {
     size_t offset{0};
     size_t maxAlignment{0};
+
+    Members.reserve(fields.size());
 
     for (const RuntimeField &field : fields) {
       if (offset % field.Alignment != 0) {
@@ -91,13 +97,29 @@ struct RuntimeStruct {
 
   template <typename T>
   [[nodiscard]] RuntimeStruct withMember() const {
-    std::vector<RuntimeField> fields;
-    fields.reserve(Members.size() + 1);
+    return withField(RuntimeField::runtimeFieldFor<T>());
+  }
+
+  [[nodiscard]] RuntimeStruct withField(RuntimeField field) const {
+    std::set<RuntimeField> fields;
     for (const auto &member : Members) {
-      fields.push_back(member.Field);
+      fields.insert(member.Field);
     }
-    fields.push_back(RuntimeField::runtimeFieldFor<T>());
+    fields.insert(field);
+    return RuntimeStruct{fields};
+  }
+
+  template<typename... Ts>
+  static RuntimeStruct withMembers() {
+    std::set<RuntimeField> fields{RuntimeField::runtimeFieldFor<Ts>()...};
     return RuntimeStruct{fields};
   }
 };
 } // namespace solaris
+
+template <>
+struct std::hash<solaris::RuntimeField> {
+  size_t operator()(const solaris::RuntimeField &field) const noexcept {
+    return field.TypeIndex.hash_code();
+  }
+};

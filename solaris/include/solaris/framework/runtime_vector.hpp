@@ -18,6 +18,12 @@ public:
 
   public:
     explicit View(const RuntimeVector &vector) : m_Vector{vector} {}
+    View(View&& rhs) noexcept : m_Vector(rhs.m_Vector) {};
+
+    View& operator=(View&& rhs) noexcept {
+      new (this) View(rhs);
+      return *this;
+    };
 
     SelectiveObjectPtr<Ts...> begin() const {
       return {(uint8_t *)m_Vector.m_Allocation, m_Vector.m_RuntimeStruct};
@@ -90,5 +96,9 @@ public:
   size_t size() const { return m_Size; }
 
   size_t capacity() const { return m_Capacity; }
+
+  [[nodiscard]] const RuntimeStruct &runtimeStruct() const {
+    return m_RuntimeStruct;
+  }
 };
 } // namespace solaris
