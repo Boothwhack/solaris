@@ -7,7 +7,7 @@ namespace solaris::core {
 template <typename C>
 class BaseLayer {
 public:
-  virtual ~BaseLayer() {}
+  virtual ~BaseLayer() = default;
 };
 
 template <typename T, typename C>
@@ -21,8 +21,9 @@ public:
   template <typename E>
   void addInstanceHandler(void (T::*handler)(typename Dispatcher<E, C>::Context)
   ) {
-    m_Bus.template addHandler<E>([=](typename Dispatcher<E, C>::Context context
-                                 ) { (m_Layer.*handler)(std::move(context)); });
+    T& layer{m_Layer};
+    m_Bus.template addHandler<E>([&](typename Dispatcher<E, C>::Context context
+                                 ) { (layer.*handler)(std::move(context)); });
   }
 
   template <typename E>
