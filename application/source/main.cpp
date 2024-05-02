@@ -5,6 +5,7 @@
 #include <solaris/core/layer_stack.hpp>
 #include <solaris/core/queue.hpp>
 #include <solaris/framework/resources.hpp>
+#include <GLFW/glfw3.h>
 
 using namespace solaris::core;
 using namespace solaris::framework;
