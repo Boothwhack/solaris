@@ -9,8 +9,8 @@ FetchContent_Declare(glfw3
         OVERRIDE_FIND_PACKAGE
 )
 
-set(GLFW_BUILD_WAYLAND false)
-set(GLFW_BUILD_X11 false)
+set(GLFW_BUILD_WAYLAND true)
+set(GLFW_BUILD_X11 true)
 set(GLFW_BUILD_DOCS false)
 
 FetchContent_Declare(Catch2
