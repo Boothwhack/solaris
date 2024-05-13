@@ -3,16 +3,9 @@
 #include <array>
 #include <concepts>
 #include <cstddef>
+#include <cstring>
 
 namespace solaris {
-template <size_t Dims>
-struct MatrixCell {
-  std::array<size_t, Dims> Cell;
-
-  size_t operator[](size_t index) const {
-    return index >= Dims ? 0 : Cell[index];
-  }
-};
 
 namespace impl {
 template <typename T>
@@ -44,11 +37,7 @@ private:
   template <std::invocable<const T &, const T &> F>
   Matrix piecewise(const Matrix &other, F &&f) const {
     Matrix output;
-    /*Matrix output;
-    for (size_t i{0}; i < m_Data.size(); ++i) {
-      output.m_Data[i] = m_Data[i] + other.m_Data[i];
-    }
-    return output;*/
+
     for (size_t i{0}; i < m_Data.size(); ++i) {
       output.m_Data[i] = f(m_Data[i], other.m_Data[i]);
     }
@@ -227,10 +216,18 @@ using Vector = Matrix<T, D, 1>;
 template <typename T>
 using Vec2 = Vector<T, 2>;
 
-using Vec2f = Vector<float, 2>;
+using Vec2f = Vec2<float>;
+using Vec2i = Vec2<int>;
 
 template <typename T>
-using Vec3 = Vector<T, 2>;
+using Vec3 = Vector<T, 3>;
 
-using Vec3f = Vector<float, 2>;
+using Vec3f = Vec3<float>;
+using Vec3i = Vec3<int>;
+
+template <typename T>
+using Vec4 = Vector<T, 4>;
+
+using Vec4f = Vec4<float>;
+using Vec4i = Vec4<int>;
 } // namespace solaris
