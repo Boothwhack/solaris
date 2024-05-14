@@ -22,7 +22,7 @@ public:
   void addInstanceHandler(void (T::*handler)(typename Dispatcher<E, C>::Context)
   ) {
     T& layer{m_Layer};
-    m_Bus.template addHandler<E>([&](typename Dispatcher<E, C>::Context context
+    m_Bus.template addHandler<E>([&layer, handler=handler](typename Dispatcher<E, C>::Context context
                                  ) { (layer.*handler)(std::move(context)); });
   }
 
