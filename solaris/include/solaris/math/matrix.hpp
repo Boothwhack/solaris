@@ -46,10 +46,11 @@ private:
 
 public:
   Matrix() = default;
+
   template <typename... Args>
   Matrix(Args &&...args)
       : m_Data{(T)std::forward<Args>(args)...} {
-  } // NOLINT(*-explicit-constructor)
+  }
 
   [[nodiscard]] size_t columns() const { return Columns; }
   [[nodiscard]] size_t rows() const { return Rows; }
@@ -220,6 +221,11 @@ public:
   }
 };
 
+template <typename T>
+using Matrix4 = Matrix<T, 4, 4>;
+
+using Matrix4f = Matrix4<float>;
+
 template <typename T, size_t D>
 using Vector = Matrix<T, D, 1>;
 
@@ -240,4 +246,41 @@ using Vec4 = Vector<T, 4>;
 
 using Vec4f = Vec4<float>;
 using Vec4i = Vec4<int>;
+
+namespace matrix {
+template <typename T, size_t S>
+Matrix<T, S, S> identity() {
+  Matrix<T, S, S> output;
+  for (size_t r{0}; r < S; ++r)
+    output[{r, r}] = 1.0;
+  return output;
+}
+
+template <typename T>
+Matrix4<T> translation(const Vec3<T> &translation) {
+  auto output{identity<T, 4>()};
+  output[{3, 0}] = translation.x();
+  output[{3, 1}] = translation.y();
+  output[{3, 2}] = translation.z();
+  return output;
+}
+
+template <typename T>
+Matrix4<T> scale(const T &scalar) {
+  auto output{identity<T, 4>()};
+  output[{0, 0}] = scalar;
+  output[{1, 1}] = scalar;
+  output[{2, 2}] = scalar;
+  return output;
+}
+
+template <typename T>
+Matrix4<T> scale(const Vector<T, 3> &scale) {
+  auto output{identity<T, 4>()};
+  output[{0, 0}] = scale.x();
+  output[{1, 1}] = scale.y();
+  output[{2, 2}] = scale.z();
+  return output;
+}
+} // namespace matrix
 } // namespace solaris
