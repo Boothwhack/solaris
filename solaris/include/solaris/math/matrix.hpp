@@ -204,9 +204,17 @@ public:
     return output;
   }
 
-  template <size_t C2>
-  Matrix<T, R, C2> operator*(const Matrix<T, R, C2> &rhs) const {
-    return multiply(rhs);
+  Matrix operator*(const Matrix &rhs) const {
+    Matrix output;
+    size_t n{C};
+    for (size_t i{0}; i < C; ++i) {
+      for (size_t j{0}; j < R; ++j) {
+        for (size_t k{0}; k < n; ++k) {
+          output[{i, j}] += at({i, k}) * rhs[{k, j}];
+        }
+      }
+    }
+    return output;
   }
 };
 
