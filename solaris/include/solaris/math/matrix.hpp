@@ -190,6 +190,8 @@ public:
 
   Matrix operator-(const Matrix &other) const { return subtract(other); }
 
+  Matrix operator-() const { return Matrix{} - *this; }
+
   [[nodiscard]] Matrix<T, R, 1> multiply(const Matrix<T, R, 1> &rhs) const
     requires(R == C)
   {
